@@ -1,0 +1,52 @@
+﻿<Page
+    x:Class="ToDoUWP.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ToDoUWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <ListView Grid.Row="0" Grid.Column="0" Name="listView"
+            ItemsSource="{x:Bind toDos}" SelectionChanged="listView_SelectionChanged">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="local:ToDo">
+                    <RelativePanel>
+                        <TextBlock Name="tbContent" Text="{Binding Content}"
+                                   RelativePanel.AlignLeftWithPanel="True"
+                                   RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                        <Button Name="remove" 
+                                Visibility="{Binding Visibility}"
+                                Click="remove_Click"
+                                RelativePanel.AlignRightWithPanel="True"
+                                RelativePanel.AlignVerticalCenterWithPanel="True"
+                                >刪除</Button>
+                    </RelativePanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <RelativePanel Grid.Row="1" Grid.Column="0">
+            <Button Name="buttonAdd" Grid.Column="1" Click="Button_Click"
+                    RelativePanel.AlignRightWithPanel="True">添加</Button>
+            <TextBox Name="textBoxAdd" RelativePanel.LeftOf="buttonAdd"
+                     RelativePanel.AlignLeftWithPanel="True"/>
+        </RelativePanel>
+    </Grid>
+</Page>
